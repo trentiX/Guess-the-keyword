@@ -12,4 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Word.unity
     guid: e0f77d1be24aafa4cad526369794e2dd
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 4924579c1a4bd3c45bf6cc03e33f4887, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 450b3fd11cc6678459db9048a39b8af3, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 973f6d28ec9408d4ea21c18df6efde77, type: 2}

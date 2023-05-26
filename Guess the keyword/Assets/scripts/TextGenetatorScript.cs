@@ -100,7 +100,7 @@ public class TextGenetatorScript : MonoBehaviour
                 case "Gym":
                     generateWord(gymCategoryRus);
                     break;
-                case "Pet":
+                case "Pets":
                     generateWord(petCategoryRus);
                     break;
                 case "Space":
