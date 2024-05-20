@@ -25,7 +25,7 @@ public class DicreaseAmountOfPlayers : MonoBehaviour
             DataHolder.amountOfPlayers = amount;
         }
 
-        if (amount < 5)
+        if (amount < 5) // decrease boarders of field when thereare less then 5 players
         {
             InputField3.SetActive(false);
 
@@ -36,7 +36,7 @@ public class DicreaseAmountOfPlayers : MonoBehaviour
             rtB.position = new Vector2(540, 960);
         }
 
-        else if (amount < 7)
+        else if (amount < 7) // decrease boarders of field when thereare less then 7 players
         {
             InputField4.SetActive(false);
 
