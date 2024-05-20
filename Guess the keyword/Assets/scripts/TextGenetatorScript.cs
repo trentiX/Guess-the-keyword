@@ -68,10 +68,10 @@ public class TextGenetatorScript : MonoBehaviour
 
     public void Awake()
     {
-        wordIndex = Random.Range(0, 25);
+        wordIndex = Random.Range(0, 25); // selecting the word 
         if (gameLanguage == 1)
         {
-            switch (gameCategory)
+            switch (gameCategory) // categories for english version
             {
                 case "School":
                     generateWord(schoolCategoryEng);
@@ -96,7 +96,7 @@ public class TextGenetatorScript : MonoBehaviour
         }
         else
         {
-            switch (gameCategory)
+            switch (gameCategory) // categories for russian version
             {
                 case "School":
                     generateWord(schoolCategoryRus);
@@ -120,11 +120,11 @@ public class TextGenetatorScript : MonoBehaviour
             }
         }
     }
-    public void generateWord(string [] category)
+    public void generateWord(string [] category) //method for generating the word
     {
         mainText.text = category[wordIndex];
         Debug.Log(mainText.text);
-        while (mainText.text == DataHolder.repeatWord)
+        while (mainText.text == DataHolder.repeatWord) //cheking if word was before
         {
             wordIndex = Random.Range(0, 25);
             mainText.text = category[wordIndex];
