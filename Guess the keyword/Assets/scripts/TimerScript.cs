@@ -80,18 +80,18 @@ public class TimerScript : MonoBehaviour
         }
         else if (language == 0)
         {
-            teamMoveText.text = $"Сейчас очередь {teamName} отгадывать слово";
+            teamMoveText.text = $"Г‘ГҐГ©Г·Г Г± Г®Г·ГҐГ°ГҐГ¤Гј {teamName} Г®ГІГЈГ Г¤Г»ГўГ ГІГј Г±Г«Г®ГўГ®";
         }
 
     }
     private void TimerOn()
     {
-        timeStart -= Time.deltaTime;
-        timerText.text = Mathf.Round(timeStart).ToString();
+        timeStart -= Time.deltaTime; // timer
+        timerText.text = Mathf.Round(timeStart).ToString(); 
             
         if (timeStart < 1)
         {
-            ring.Play();
+            ring.Play(); // play sound after next turn
 
             switch (DataHolder.amountOfPlayers)
             {
@@ -146,7 +146,7 @@ public class TimerScript : MonoBehaviour
 
             }          
             timeStart = DataHolder.time;
-            TimerOn();
+            TimerOn(); // turn on timer again (loop)
         }
     }
 
