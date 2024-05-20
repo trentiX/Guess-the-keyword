@@ -6,9 +6,13 @@ using UnityEngine.UIElements;
 
 public class TextGenetatorScript : MonoBehaviour
 {
+    [SerializeField] InputField field;
+    string answer = field.text;
+
     int gameLanguage = DataHolder.language;
     string gameCategory = DataHolder.myCategory;
-   
+    private TimerScript timer;
+    
     private string[] schoolCategoryEng = { "Teacher" , "Student" , "Classroom" , "Book" , "Backpack" , "Schedule" , "Vacation" , "Lesson" , "Break" , "Grade" , "Assignment" ,
                                        "School bus" , "Cafeteria" , "School uniform" , "Library" , "Summer camp" , "Principal" , "Exam" , "Diary" , "Presentation" , "PE" ,
                                        "Playground" , "Student council" , "School photo" , "Bell"}; //25
@@ -129,9 +133,9 @@ public class TextGenetatorScript : MonoBehaviour
         DataHolder.repeatWord = mainText.text;
     }
     
-    public void CheckTheWord(string[] category, string answer)
+    public void CheckTheWord(string answer)
     {
-        int l = 0, r = category.Length - 1; 
+        int l = 0, r = gameCategory.Length - 1; 
   
         // Loop to implement Binary Search 
         while (l <= r) { 
@@ -139,7 +143,7 @@ public class TextGenetatorScript : MonoBehaviour
             // Calculatiing mid 
             int m = l + (r - l) / 2; 
   
-            int res = answer.CompareTo(category[m]); 
+            int res = answer.CompareTo(gameCategory[m]); 
   
             // Check if x is present at mid 
             if (res == 0) 
@@ -158,6 +162,6 @@ public class TextGenetatorScript : MonoBehaviour
     }
     public void win()
     {
-        
+        Debug.log(timer.teammove + "wins!")
     }
 }
