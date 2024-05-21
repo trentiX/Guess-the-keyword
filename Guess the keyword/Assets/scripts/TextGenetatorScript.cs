@@ -1,39 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class TextGenetatorScript : MonoBehaviour
 {
-    [SerializeField] InputField field;
-    string answer = field.text;
-
     int gameLanguage = DataHolder.language;
     string gameCategory = DataHolder.myCategory;
-    private TimerScript timer;
     
-    private string[] schoolCategoryEng = { "Teacher" , "Student" , "Classroom" , "Book" , "Backpack" , "Schedule" , "Vacation" , "Lesson" , "Break" , "Grade" , "Assignment" ,
+    private String[] schoolCategoryEng = { "Teacher" , "Student" , "Classroom" , "Book" , "Backpack" , "Schedule" , "Vacation" , "Lesson" , "Break" , "Grade" , "Assignment" ,
                                        "School bus" , "Cafeteria" , "School uniform" , "Library" , "Summer camp" , "Principal" , "Exam" , "Diary" , "Presentation" , "PE" ,
                                        "Playground" , "Student council" , "School photo" , "Bell"}; //25
 
-    private string[] gymCategoryEng = { "Parallel bars" , "Locker room" , "Trampoline" , "Kettlebell" , "Jump rope" , "Fitness ball" , "Back day" , "Punching bag" , "Exercise mat" , 
+    private String[] gymCategoryEng = { "Parallel bars" , "Locker room" , "Trampoline" , "Kettlebell" , "Jump rope" , "Fitness ball" , "Back day" , "Punching bag" , "Exercise mat" , 
                                         "Trainer" , "Barbell" , "Dumbells" , "Workout" , "Exercise" , "Training program" , "Treadmill" , "Exercise bike" , "Pull-ups" , "Squats" ,
                                         "Bench press" , "Cardio" , "Stretching" , "Calf raise" , "Resistance band" , "bar" };
 
-    private string[] petCategoryEng = { "Dog" , "Cat" , "Hamster" , "Parrot" , "Pet store" , "Turtle" , "Horse" , "Snake" , "Bird" ,
+    private String[] petCategoryEng = { "Dog" , "Cat" , "Hamster" , "Parrot" , "Pet store" , "Turtle" , "Horse" , "Snake" , "Bird" ,
                                         "Rat" , "Toy" , "Frog" , "Pigeon" , "Hedgehog" , "Gold fish" , "Snail" , "Goose" , "Monkey" , "Veterinarian" ,
                                         "Rooster" , "Axolotl" , "Lizard" , "Treat" , "Doghouse" , "Birdcage" };
 
-    private string[] spaceCategoryEng = { "Star" , "Planet" , "Galaxy" , "Spaceship" , "Astronaut" , "Moon" , "Sun" , "Black hole" , "Mars" ,
+    private String[] spaceCategoryEng = { "Star" , "Planet" , "Galaxy" , "Spaceship" , "Astronaut" , "Moon" , "Sun" , "Black hole" , "Mars" ,
                                         "Satellite" , "Aliens" , "Asteroid" , "Space station" , "Universe" , "Comet" , "Gravity" , "Space telescope" , "Milky way" , "Pluto" ,
                                         "Atmosphere" , "Meteorite" , "Eclipse" , "Vacuum" , "Astronomer" , "Solar system" };
 
-    private string[] animeCategoryEng = { "Anime" , "Manga" , "Otaku" , "Senpai" , "Kohai" , "Cosplay" , "Fandom" , "Studio" , "One piece" ,
+    private String[] animeCategoryEng = { "Anime" , "Manga" , "Otaku" , "Senpai" , "Kohai" , "Cosplay" , "Fandom" , "Studio" , "One piece" ,
                                         "Naruto" , "Dattebayo" , "Attack on Titan" , "Death Note" , "Fairy Tail" , "Pokemon" , "Fullmetal Alchemist" , "Tokyo ghoul" , "Cowboy Bebop" , "Dragon Ball Z" ,
                                         "One Punch Man" , "Sword Art Online" , "Basketball Kuroko" , "K-On" , "Demon Slayer" , "Blue Lock" };
 
-    private string[] filmsCategoryEng = { "Premiere" , "Camera" , "Special Effects" , "Film Studio" , "Costumes" , "Awards" , "Genre" , "Hollywood" , "Interstellar" ,
+    private String[] filmsCategoryEng = { "Premiere" , "Camera" , "Special Effects" , "Film Studio" , "Costumes" , "Awards" , "Genre" , "Hollywood" , "Interstellar" ,
                                         "Acter" , "Will Smith" , "Tom Hanks" , "Marvel" , "DC" , "Batman" , "Superman" , "Spider-man" , "Leonardo Dicaprio" , "Avatar" ,
                                         "Blade Runner 2049" , "Ryan Gosling" , "Green Book" , "Green Mile" , "Shawshank Redemption" , "Forest Gump" };
 
@@ -120,8 +119,10 @@ public class TextGenetatorScript : MonoBehaviour
             }
         }
     }
-    public void generateWord(string [] category) //method for generating the word
+    public void generateWord(string[] category) //method for generating the word
     {
+        DataHolder.categoryOfWord = category;
+        
         mainText.text = category[wordIndex];
         Debug.Log(mainText.text);
         while (mainText.text == DataHolder.repeatWord) //cheking if word was before
@@ -131,37 +132,5 @@ public class TextGenetatorScript : MonoBehaviour
         }
         Debug.Log(mainText.text);
         DataHolder.repeatWord = mainText.text;
-    }
-    
-    public void CheckTheWord(string answer)
-    {
-        int l = 0, r = gameCategory.Length - 1; 
-  
-        // Loop to implement Binary Search 
-        while (l <= r) { 
-  
-            // Calculatiing mid 
-            int m = l + (r - l) / 2; 
-  
-            int res = answer.CompareTo(gameCategory[m]); 
-  
-            // Check if x is present at mid 
-            if (res == 0) 
-                win(); 
-  
-            // If x greater, ignore left half 
-            if (res > 0) 
-                l = m + 1; 
-  
-            // If x is smaller, ignore right half 
-            else
-                r = m - 1; 
-        } 
-  
-        return; 
-    }
-    public void win()
-    {
-        Debug.log(timer.teammove + "wins!")
     }
 }

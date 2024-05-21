@@ -15,7 +15,7 @@ public class TimerScript : MonoBehaviour
     private float timeStart = DataHolder.time;
     private int language = DataHolder.language;
     private int teamMove = 0;
-
+    public string currTeam;
 
     void Start()
     {
@@ -74,6 +74,7 @@ public class TimerScript : MonoBehaviour
     }
     private void TeamMove(string teamName)
     {
+        currTeam = teamName;
         if (language == 1)
         {
             teamMoveText.text = $"It's {teamName}'s turn to guess the word";

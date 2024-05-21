@@ -5,6 +5,7 @@ using UnityEngine;
 public static class DataHolder
 {
     public static string myCategory;
+    public static string[] categoryOfWord;
 
     public static string firstTeamName = "NAVI";
     public static string secTeamName = "Virtus Pro";
@@ -15,7 +16,7 @@ public static class DataHolder
 
     public static int amountOfPlayers = 4;
 
-    public static int language;
+    public static int language = 1;
 
     public static string repeatWord;
 
