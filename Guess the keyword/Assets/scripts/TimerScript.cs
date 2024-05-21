@@ -15,11 +15,12 @@ public class TimerScript : MonoBehaviour
     private float timeStart = DataHolder.time;
     private int language = DataHolder.language;
     private int teamMove = 0;
-    public string currTeam;
+    public string currTeam = "Team";
 
     void Start()
     {
         timerText.text = timeStart.ToString();
+        
     }
 
     private void Update()

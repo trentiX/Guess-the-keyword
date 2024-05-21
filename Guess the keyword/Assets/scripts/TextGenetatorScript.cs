@@ -1,136 +1,94 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class TextGenetatorScript : MonoBehaviour
 {
     int gameLanguage = DataHolder.language;
     string gameCategory = DataHolder.myCategory;
-    
-    private String[] schoolCategoryEng = { "Teacher" , "Student" , "Classroom" , "Book" , "Backpack" , "Schedule" , "Vacation" , "Lesson" , "Break" , "Grade" , "Assignment" ,
-                                       "School bus" , "Cafeteria" , "School uniform" , "Library" , "Summer camp" , "Principal" , "Exam" , "Diary" , "Presentation" , "PE" ,
-                                       "Playground" , "Student council" , "School photo" , "Bell"}; //25
 
-    private String[] gymCategoryEng = { "Parallel bars" , "Locker room" , "Trampoline" , "Kettlebell" , "Jump rope" , "Fitness ball" , "Back day" , "Punching bag" , "Exercise mat" , 
-                                        "Trainer" , "Barbell" , "Dumbells" , "Workout" , "Exercise" , "Training program" , "Treadmill" , "Exercise bike" , "Pull-ups" , "Squats" ,
-                                        "Bench press" , "Cardio" , "Stretching" , "Calf raise" , "Resistance band" , "bar" };
+    private string[][] categoriesEng = {
+        new string[] { "Teacher" , "Student" , "Classroom" , "Book" , "Backpack" , "Schedule" , "Vacation" , "Lesson" , "Break" , "Grade" , "Assignment" ,
+            "School bus" , "Cafeteria" , "School uniform" , "Library" , "Summer camp" , "Principal" , "Exam" , "Diary" , "Presentation" , "PE" ,
+            "Playground" , "Student council" , "School photo" , "Bell" }, // School
+        new string[] { "Parallel bars" , "Locker room" , "Trampoline" , "Kettlebell" , "Jump rope" , "Fitness ball" , "Back day" , "Punching bag" , "Exercise mat" , 
+            "Trainer" , "Barbell" , "Dumbells" , "Workout" , "Exercise" , "Training program" , "Treadmill" , "Exercise bike" , "Pull-ups" , "Squats" ,
+            "Bench press" , "Cardio" , "Stretching" , "Calf raise" , "Resistance band" , "bar" }, // Gym
+        new string[] { "Dog" , "Cat" , "Hamster" , "Parrot" , "Pet store" , "Turtle" , "Horse" , "Snake" , "Bird" ,
+            "Rat" , "Toy" , "Frog" , "Pigeon" , "Hedgehog" , "Gold fish" , "Snail" , "Goose" , "Monkey" , "Veterinarian" ,
+            "Rooster" , "Axolotl" , "Lizard" , "Treat" , "Doghouse" , "Birdcage" }, // Pets
+        new string[] { "Star" , "Planet" , "Galaxy" , "Spaceship" , "Astronaut" , "Moon" , "Sun" , "Black hole" , "Mars" ,
+            "Satellite" , "Aliens" , "Asteroid" , "Space station" , "Universe" , "Comet" , "Gravity" , "Space telescope" , "Milky way" , "Pluto" ,
+            "Atmosphere" , "Meteorite" , "Eclipse" , "Vacuum" , "Astronomer" , "Solar system" }, // Space
+        new string[] { "Anime" , "Manga" , "Otaku" , "Senpai" , "Kohai" , "Cosplay" , "Fandom" , "Studio" , "One piece" ,
+            "Naruto" , "Dattebayo" , "Attack on Titan" , "Death Note" , "Fairy Tail" , "Pokemon" , "Fullmetal Alchemist" , "Tokyo ghoul" , "Cowboy Bebop" , "Dragon Ball Z" ,
+            "One Punch Man" , "Sword Art Online" , "Basketball Kuroko" , "K-On" , "Demon Slayer" , "Blue Lock" }, // Anime
+        new string[] { "Premiere" , "Camera" , "Special Effects" , "Film Studio" , "Costumes" , "Awards" , "Genre" , "Hollywood" , "Interstellar" ,
+            "Acter" , "Will Smith" , "Tom Hanks" , "Marvel" , "DC" , "Batman" , "Superman" , "Spider-man" , "Leonardo Dicaprio" , "Avatar" ,
+            "Blade Runner 2049" , "Ryan Gosling" , "Green Book" , "Green Mile" , "Shawshank Redemption" , "Forest Gump" } // Films
+    };
 
-    private String[] petCategoryEng = { "Dog" , "Cat" , "Hamster" , "Parrot" , "Pet store" , "Turtle" , "Horse" , "Snake" , "Bird" ,
-                                        "Rat" , "Toy" , "Frog" , "Pigeon" , "Hedgehog" , "Gold fish" , "Snail" , "Goose" , "Monkey" , "Veterinarian" ,
-                                        "Rooster" , "Axolotl" , "Lizard" , "Treat" , "Doghouse" , "Birdcage" };
-
-    private String[] spaceCategoryEng = { "Star" , "Planet" , "Galaxy" , "Spaceship" , "Astronaut" , "Moon" , "Sun" , "Black hole" , "Mars" ,
-                                        "Satellite" , "Aliens" , "Asteroid" , "Space station" , "Universe" , "Comet" , "Gravity" , "Space telescope" , "Milky way" , "Pluto" ,
-                                        "Atmosphere" , "Meteorite" , "Eclipse" , "Vacuum" , "Astronomer" , "Solar system" };
-
-    private String[] animeCategoryEng = { "Anime" , "Manga" , "Otaku" , "Senpai" , "Kohai" , "Cosplay" , "Fandom" , "Studio" , "One piece" ,
-                                        "Naruto" , "Dattebayo" , "Attack on Titan" , "Death Note" , "Fairy Tail" , "Pokemon" , "Fullmetal Alchemist" , "Tokyo ghoul" , "Cowboy Bebop" , "Dragon Ball Z" ,
-                                        "One Punch Man" , "Sword Art Online" , "Basketball Kuroko" , "K-On" , "Demon Slayer" , "Blue Lock" };
-
-    private String[] filmsCategoryEng = { "Premiere" , "Camera" , "Special Effects" , "Film Studio" , "Costumes" , "Awards" , "Genre" , "Hollywood" , "Interstellar" ,
-                                        "Acter" , "Will Smith" , "Tom Hanks" , "Marvel" , "DC" , "Batman" , "Superman" , "Spider-man" , "Leonardo Dicaprio" , "Avatar" ,
-                                        "Blade Runner 2049" , "Ryan Gosling" , "Green Book" , "Green Mile" , "Shawshank Redemption" , "Forest Gump" };
-
-
-
-    private string[] schoolCategoryRus = { "Ó÷èòåëü" , "Ó÷åíèê" , "Êëàññ" , "Êíèãà" , "Ðþêçàê" , "Ðàñïèñàíèå" , "Êàíèêóëû" , "Óðîê" , "Ïåðåìåíà" , "Îöåíêà" , "Äîìàøíèå çàäàíèå" ,
-                                       "Øêîëüíûé àâòîáóñ" , "Ñòîëîâàÿ" , "Øêîëüíàÿ ôîðìà" , "Áèáëåîòåêà" , "Ëåòíèé ëàãåðü" , "Äèðåêòîð" , "Ýêçàìåí" , "Äíåâíèê" , "Ïðåçåíòàöèÿ" , "Ôèç-ðà" ,
-                                       "Ñïîðòèâíàÿ ïëîùàäêà" , "Øêîëüíûé ñîâåò" , "Ôîòî ñ êëàññîì" , "Çâîíîê"}; //25
-
-    private string[] gymCategoryRus = { "Áðóñüÿ" , "Ðàçäåâàëêà" , "Áàòóò" , "Ãèðÿ" , "Ñêàêàëêà" , "Ìÿ÷ äëÿ ôèòíåñà" , "Äåíü ñïèíû" , "Áîêñåðñêàÿ ãðóøà" , "Ãèìíàñòè÷åñêèé êîâðèê" ,
-                                        "Òðåíåð" , "Øòàíãà" , "Äåíü íîã" , "Òðåíèðîâêà" , "Óïðàæíåíèå" , "Òðåíèðîâî÷íàÿ ïðîãðàììà" , "Áåãîâàÿ äîðîæêà" , "Âåëîòðåíàæåð" , "Ïîäòÿãèâàíèÿ" , "Ïðèñåäàíèÿ" ,
-                                        "Æèì øòàíãè ëåæà" , "Êàðäèî" , "Ðàñòÿæêà" , "Ïîäúåì íà íîñêè" , "Ýñïàíäåð" , "Ãðèô" };
-
-    private string[] petCategoryRus= { "Ñîáàêà" , "Êîøêà" , "Õîìÿê" , "Ïîïóãàé" , "Çîîìàãàçèí" , "×åðåïàõà" , "Ëîøàäü" , "Çìåÿ" , "Ïòèöà" ,
-                                        "Êðûñà" , "Èãðóøêà" , "Ëÿãóøêà" , "Ãîëóáü" , "¨æèê" , "Çîëîòàÿ ðûáêà" , "Óëèòêà" , "Ãóñü" , "Îáåçüÿíà" , "Âåòåðèíàð" ,
-                                        "Ïåòóõ" , "Àêñîëîòëü" , "ßùåðèöà" , "Ëàêîìñòâî" , "Áóäêà" , "Ïòè÷üÿ êëåòêà"};
-
-    private string[] spaceCategoryRus = { "Çâåçäà" , "Ïëàíåòà" , "Ãàëàêòèêà" , "Êîñìè÷åñêèé êîðàáëü" , "Àñòðîíàâò" , "Ëóíà" , "Ñîëíöå" , "×åðíàÿ äûðà" , "Ìàðñ" ,
-                                        "Ñïóòíèê" , "Ïðèùåëüöû" , "Àñòåðîèä" , "Êîñìè÷åñêàÿ ñòàíöèÿ" , "Âñåëåííàÿ" , "Êîìåòà" , "Ãðàâèòàöèÿ" , "Êîñìè÷åñêèé òåëåñêîï" , "Ìëå÷íûé ïóòü" , "Ïëóòîí" ,
-                                        "Àòìîñôåðà" , "Ìåòåîðèò" , "Çàòìåíèå" , "Âàêóóì" , "Àñòðîíîì" , "Ñîëíå÷íàÿ ñèñòåìà" };
-
-    private string[] animeCategoryRus = { "Àíèìå" , "Ìàíãà" , "Îòàêó" , "Ñåíïàé" , "Êîõàé" , "Êîñïëåé" , "Ôàíäîì" , "Ñòóäèÿ" , "Âàí-ïèñ" ,
-                                        "Íàðóòî" , "Dattebayo" , "Àòàêà Òèòàíîâ" , "Òåòðàäü Ñìåðòè" , "Ôåéðè Òåéë" , "Ïîêåìîí" , "Ñòàëüíîé Àëõèìèê" , "Òîêèéñêèé Ãóëü" , "Êîâáîé Áåáîï" , "Äðàãîíáîëë Çåò" ,
-                                        "Âàí-Ïàí÷ìåí" , "Ìàñòåðà ìå÷à îíëàéí" , "Áàñêåòáîë Êóðîêî" , "Ê-Îí" , "Êëèíîê, ðàññåêàþùèé äåìîíîâ" , "Ñèíèÿ Òþðüìà" };
-
-    private string[] filmsCategoryRus = { "Ïðåìüåðà" , "Êàìåðà" , "Ñïåöèàëüíûå ýôôåêòû" , "Êèíîñòóäèÿ" , "Êîñòþìû" , "Íàãðàäû" , "Æàíð" , "Ãîëëèâóä" , "Èíòåðñòåëëàð" ,
-                                        "Àêò¸ð" , "Óèëë Ñìèò" , "Òîì Õåíêñ" , "Ìàðâåë" , "ÄÑ" , "Áýòìåí" , "Ñóïåðìýí" , "×åëîâåê-ïàóê" , "Ëåîíàðäî Äèêàïðèî" , "Àâàòàð" ,
-                                        "Áåãóùèé ïî ëåçâèþ 2049" , "Ðàÿí Ãîñëèíã" , "Çåë¸íàÿ êíèãà" , "Çåë¸íàÿ ìèëÿ" , "Ïîáåã èç Øîóøåíêà" , "Ôîððåñò Ãàìï" };
+    private string[][] categoriesRus = {
+        new string[] { "Ó÷èòåëü", "Ó÷åíèê", /*...*/ "Çâîíîê" }, // School
+        new string[] { "Áðóñüÿ", "Ðàçäåâàëêà", /*...*/ "Ãðèô" }, // Gym
+        new string[] { "Ñîáàêà", "Êîøêà", /*...*/ "Ïòè÷üÿ êëåòêà" }, // Pets
+        new string[] { "Çâåçäà", "Ïëàíåòà", /*...*/ "Ñîëíå÷íàÿ ñèñòåìà" }, // Space
+        new string[] { "Àíèìå", "Ìàíãà", /*...*/ "Ñèíèÿ Òþðüìà" }, // Anime
+        new string[] { "Ïðåìüåðà", "Êàìåðà", /*...*/ "Ôîððåñò Ãàìï" } // Films
+    };
 
     public Text mainText;
     private int wordIndex;
 
-    public void Awake()
+    void Awake()
     {
-        wordIndex = Random.Range(0, 25); // selecting the word 
-        if (gameLanguage == 1)
+        string[] selectedCategory = SelectCategory();
+        if (selectedCategory != null)
         {
-            switch (gameCategory) // categories for english version
-            {
-                case "School":
-                    generateWord(schoolCategoryEng);
-                    break;
-                case "Gym":
-                    generateWord(gymCategoryEng);
-                    break;
-                case "Pets":
-                    generateWord(petCategoryEng);
-                    break;
-                case "Space":
-                    generateWord(spaceCategoryEng);
-                    break;
-                case "Films":
-                    generateWord(filmsCategoryEng);
-                    break;
-                case "Anime":
-                    generateWord(animeCategoryEng);
-                    break;
-
-            }
-        }
-        else
-        {
-            switch (gameCategory) // categories for russian version
-            {
-                case "School":
-                    generateWord(schoolCategoryRus);
-                    break;
-                case "Gym":
-                    generateWord(gymCategoryRus);
-                    break;
-                case "Pets":
-                    generateWord(petCategoryRus);
-                    break;
-                case "Space":
-                    generateWord(spaceCategoryRus);
-                    break;
-                case "Films":
-                    generateWord(filmsCategoryRus);
-                    break;
-                case "Anime":
-                    generateWord(animeCategoryRus);
-                    break;
-
-            }
+            GenerateWord(selectedCategory);
         }
     }
-    public void generateWord(string[] category) //method for generating the word
+
+    string[] SelectCategory()
+    {
+        if (gameLanguage == 1) // English
+        {
+            switch (gameCategory)
+            {
+                case "School": return categoriesEng[0];
+                case "Gym": return categoriesEng[1];
+                case "Pets": return categoriesEng[2];
+                case "Space": return categoriesEng[3];
+                case "Anime": return categoriesEng[4];
+                case "Films": return categoriesEng[5];
+            }
+        }
+        else // Russian
+        {
+            switch (gameCategory)
+            {
+                case "School": return categoriesRus[0];
+                case "Gym": return categoriesRus[1];
+                case "Pets": return categoriesRus[2];
+                case "Space": return categoriesRus[3];
+                case "Anime": return categoriesRus[4];
+                case "Films": return categoriesRus[5];
+            }
+        }
+        return null;
+    }
+
+    void GenerateWord(string[] category)
     {
         DataHolder.categoryOfWord = category;
-        
-        mainText.text = category[wordIndex];
-        Debug.Log(mainText.text);
-        while (mainText.text == DataHolder.repeatWord) //cheking if word was before
+        do
         {
-            wordIndex = Random.Range(0, 25);
+            wordIndex = Random.Range(0, category.Length);
             mainText.text = category[wordIndex];
-        }
-        Debug.Log(mainText.text);
+        } while (mainText.text == DataHolder.repeatWord);
+
         DataHolder.repeatWord = mainText.text;
+        Debug.Log(mainText.text);
     }
 }

@@ -1,73 +1,71 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Answer : MonoBehaviour
 {
-    [SerializeField] InputField field;
-
-    private String[] gameCategory;
-    private String answer;
+    [SerializeField] private InputField field;
+    [SerializeField] private Text mainText;
+    [SerializeField] private Animator mainTextAnimator;
+    private string[] gameCategory;
     private TimerScript timer;
+    const string FADEIN = "FadeIn";
+
 
     private void Start()
     {
         gameCategory = DataHolder.categoryOfWord;
-        Debug.Log(gameCategory);
-    }
-
-    public int CheckTheWord(String answer)
-    {
-        int l = 0, r = gameCategory.Length - 1; 
-  
-        // Loop to implement Binary Search 
-        while (l <= r) { 
-  
-            // Calculatiing mid 
-            int m = l + (r - l) / 2; 
-            Debug.Log("m:" + m);
-            Debug.Log(gameCategory[m]);
-            int res = answer.CompareTo(gameCategory[m]); 
-            Debug.Log("res:" + res);
-            // Check if x is present at mid 
-            if (res == 0)
-            {
-                return m;
-            }
-            
-            // If x greater, ignore left half 
-            if (res > 0)
-            {
-                l = m + 1;
-                Debug.Log("l:" + l);
-            }
-            // If x is smaller, ignore right half 
-            else
-            {
-                r = m - 1; 
-                Debug.Log("r:" + r);
-            }
-        }
-
-        return -1;
+        Array.Sort(gameCategory); // Ensure the array is sorted for binary search
+        timer = FindObjectOfType<TimerScript>(); // Assuming TimerScript is attached to an active GameObject
     }
 
     public void GiveAnswer()
     {
-        answer = field.text;
-        Debug.Log("answer: " + answer);
-        
-        int result = CheckTheWord(answer); 
+        string answer = field.text;
+        Debug.Log("Answer: " + answer);
 
-        if (result == -1) 
-            Debug.Log("Zero mathces");
+        int result = CustomBinarySearch(gameCategory, answer);
+
+        if (result < 0)
+        {
+            Debug.Log("No matches found");
+        }
         else
-            win();
+        {
+            Win();
+        }
     }
-    private void win()
+
+    private int CustomBinarySearch(string[] array, string value)
     {
-        Debug.Log("some team" + "wins!");
+        int left = 0, right = array.Length - 1;
+
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            int comparison = string.Compare(value, array[mid], StringComparison.Ordinal);
+
+            if (comparison == 0)
+            {
+                return mid;
+            }
+
+            if (comparison > 0)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid - 1;
+            }
+        }
+
+        return -1; // Value not found
+    }
+
+    private void Win()
+    {
+        mainText.text = $"{timer.currTeam} wins!";
+        mainTextAnimator.Play(FADEIN);
     }
 }
